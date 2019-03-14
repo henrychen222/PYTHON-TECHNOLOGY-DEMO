@@ -1,0 +1,208 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    <!-- title value will be replaced from app.component.ts file -->
+    Welcome to {{ title }}!
+  </h1>
+  <!--Service -->
+  {{today_date}}
+  <!-- The selector, app-new-cmp from new-cmp.component.ts needs to be added in the app.component .html file -->
+  <app-new-cmp></app-new-cmp>
+  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
+</div>
+
+<!-- Directives: Customer Directive-->
+<div style="text-align:left">
+  <!-- based on the @Directive selector from change-text.directive.ts file -->
+  <span appChangeText>Welcome to {{title}}.</span>
+</div>
+<br><br>
+
+<!-- Data Binding -->
+<div> Months :
+  <!-- Event Binding: add the change event to the dropdown -->
+  <select (change)="changemonths($event)" name="month">
+    <option *ngFor="let i of months">{{i}}</option>
+  </select>
+</div>
+<br />
+<div>
+  <!-- if-->
+  <!-- <span *ngIf="isavailable">Condition is valid.</span> -->
+
+  <!-- if else -->
+  <!-- <span *ngIf="isavailable; else condition1">Condition is valid.</span>
+  <ng-template #condition1>Condition is invalid</ng-template> -->
+
+  <!-- if then else  -->
+  <span *ngIf="isavailable; then condition1 else condition2">Condition is valid.</span>
+  <!-- Templates
+    Angular 4 changed <template> to <ng-template> is because 
+      there is a name conflict between the <template> tag and the html <template> standard tag
+  -->
+  <ng-template #condition1>Condition is valid from template </ng-template>
+  <ng-template #condition2>Condition is invalid from template</ng-template>
+</div>
+<!-- Event Binding  3.1-->
+<button (click)="myClickFunction($event)">
+  Click Me
+</button>
+
+<br><br><br>
+<h2>Here are some links to help you start: </h2>
+<ul>
+  <li>
+    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
+  </li>
+  <li>
+    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
+  </li>
+  <li>
+    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
+  </li>
+</ul>
+
+<br><br>
+<h2>Http Service Data show</h2>
+<!-- Http Service -->
+<ul *ngFor="let data of http_service_data">
+  <li>Name : {{data.name}} Address: {{data.address.city}}</li>
+</ul>
+
+<br><br>
+<h2>Http Client Data show</h2>
+<!-- Http Client  3.11 evening -->
+<ul *ngFor="let data of http_client_data">
+  <li>Name : {{data.name}} Address: {{data.address.city}}</li>
+</ul>
+
+<br><br>
+<h2>Forms</h2>
+<h3>Template Driven Form (work)</h3>
+<!-- template driven forms: 
+  create the model form controls by adding the ngModel directive and the name attribute -->
+<form #userlogin="ngForm" (ngSubmit)="onClickSubmit_template(userlogin.value)">
+  <input type="text" name="emailid" placeholder="emailid" ngModel>
+  <br />
+  <input type="password" name="passwd" placeholder="passwd" ngModel>
+  <br />
+  <input type="submit" value="submit">
+</form>
+<br>
+<h3>Model Driven Form (work)</h3>
+<div>
+  <form [formGroup]="model_driven_formdata" (ngSubmit)="onClickSubmit_model(model_driven_formdata.value)">
+    <input type="text" class="fortextbox" name="emailid" placeholder="emailid" formControlName="emailid">
+    <br />
+    <input type="password" class="fortextbox" name="passwd" placeholder="passwd" formControlName="passwd">
+    <br />
+    <input type="submit" class="forsubmit" value="Log In">
+  </form>
+</div>
+<p>
+  Email entered is : {{email_id}}
+</p>
+<h3>Model Driven Form Validate (work)</h3>
+<div>
+  <form [formGroup]="model_driven_formdata_validate" (ngSubmit)="onClickSubmit_model_validate(model_driven_formdata_validate.value)">
+    <input type="text" class="fortextbox" name="emailid_validate" placeholder="emailid_validate" formControlName="emailid_validate">
+    <br />
+    <input type="password" class="fortextbox" name="passwd_validate" placeholder="passwd_validate" formControlName="passwd_validate">
+    <br />
+    <!-- for validation-->
+    <input type="submit" [disabled]="!model_driven_formdata_validate.valid" class="forsubmit" value="Validate">
+  </form>
+</div>
+<p>
+  Email entered is : {{email_id_validate}}
+</p>
+
+<br><br>
+<h2>Animations</h2>
+<div>
+  <button (click)="animate()">Click Me</button>
+  <div [@myanimation]="state" class="rotate">
+    <img src="assets/images/test.jpeg" width="100" height="100">
+  </div>
+</div>
+
+<br><br><br><br><br><br>
+<div>
+  <h2>Materials</h2>
+  <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+  <!-- Menu  3.12 night -->
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      File
+    </button>
+    <button mat-menu-item>
+      Save As
+    </button>
+  </mat-menu>
+  <!-- SideNav -->
+  <mat-sidenav-container class="example-container">
+    <mat-sidenav #sidenav class="example-sidenav">
+      Angular 6
+    </mat-sidenav>
+    <div class="example-sidenav-content">
+      <button type="button" mat-button (click)="sidenav.open()">
+        Open sidenav
+      </button>
+    </div>
+  </mat-sidenav-container>
+  <!-- datepicker -->
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</div>
+
+<br><br><br><br><br><br><br><br>
+<!--Routing   routerLink: referred in app.module.ts as the path -->
+<a routerLink="new-cmp">New component</a>
+<!--router-outlet: ensures that the content in the new-cmp.component.html will be displayed on the page 
+  when a user clicks new component-->
+<router-outlet></router-outlet>
+
+<!-- Pipes -->
+<br><br><br><br>
+<b>{{title | uppercase}}</b><br />
+<b>{{title | lowercase}}</b>
+
+<br><br>
+<!-- Custom Pipe -->
+<h1>Custom Pipe</h1>
+<b>Square root of 25 is: {{25 | sqrt}}</b>
+<br />
+<b>Square root of 729 is: {{729 | sqrt}}</b>
+
+<!--The content below is only a placeholder and can be replaced.-->
+<br><br><br>
+<div style="width:100%;">
+  <div style="width:40%;float:left;border:solid 1px black;">
+    <h1>Uppercase Pipe</h1>
+    <b>{{title | uppercase}}</b><br />
+    <h1>Lowercase Pipe</h1>
+    <b>{{title | lowercase}}</b>
+    <h1>Currency Pipe</h1>
+    <b>{{6589.23 | currency:"USD"}}</b><br />
+    <b>{{6589.23 | currency:"USD":true}}</b> //Boolean true is used to get the sign of the currency.
+    <h1>Date pipe</h1>
+    <b>{{todaydate | date:'d/M/y'}}</b><br />
+    <b>{{todaydate | date:'shortTime'}}</b>
+    <h1>Decimal Pipe</h1>
+    <b>{{ 454.78787814 | number: '3.4-4' }}</b> // 3 is for main integer, 4 -4 are for integers to be displayed.
+  </div>
+  <div style="width:40%;float:left;border:solid 1px black;">
+    <h1>Json Pipe</h1>
+    <b>{{ jsonval | json }}</b>
+    <h1>Percent Pipe</h1>
+    <b>{{00.54565 | percent}}</b>
+    <h1>Slice Pipe</h1>
+    <b>{{months | slice:2:6}}</b>
+    // here 2 and 6 refers to the start and the end index
+  </div>
+</div>
+
+<!-- <router-outlet></router-outlet> -->
